@@ -93,5 +93,63 @@ namespace Test4
 
         //Define array of n numbers
         //comute sum of n & avarage & list of odd number
+
+        //lagacy
+        //read logs file from differnt machine (altron etc.) --> medical equiments (10-15)
+        //
+
+
+        //1. Create base Interface name as IMachineType
+        //2. Create classes Parsing for MachineTypeLogs
+        //3. Inherit IMachineType Log and check what kind of Log and pass it that particular class object.
+        //4. 
+
+
+    }
+
+    public enum Types
+    {
+        UltraSound,
+        MR,
+        SonoGraphy
+    }
+
+    public interface IMachineType
+    {
+        void FromMachine(Types typeOfMachine);
+    }
+
+    class Filter : IMachineType
+    {
+        public Types type { get; set; }
+        public void FromMachine(Types typeOfMachine)
+        {
+            switch (type)
+            {
+                case Types.MR:
+                    new ProcessMRLogs();
+                    break;
+
+                case Types.UltraSound:
+                    new ProcessUltraSoundLogs();
+                    break;
+            }
+        }
+
+        public class ProcessMRLogs
+        {
+            public ProcessMRLogs()
+            {
+                //Process Logs
+            }
+        }
+
+        public class ProcessUltraSoundLogs
+        {
+            public ProcessUltraSoundLogs()
+            {
+                //Process Logs
+            }
+        }
     }
 }
