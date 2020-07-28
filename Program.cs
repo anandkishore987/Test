@@ -2,23 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Test4
 {
+    public delegate int Sum(int[] nums);
     class Program
     {
+
         static void Main(string[] args)
         {
             var input = new int[] { 1,2,3,4,6,7,8,9,10};
-            var input1 = new int[] { 1, 2, 3, 4, 5,6, 7, 8, 9, 10 };
-            var input2 = new int[] { 1, 2, 3, 4, 5,6, 7, 8, 9, 10 };
-            var input3 = new int[] { 1, 2, 3, 4, 5,6, 7, 8, 9, 10 };
+            //var input1 = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            //var input2 = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+            //var input3 = new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 
-            int n = 10;
-            var result = FindMissingNumer(input, n);
-            Console.WriteLine(result);
-            Console.ReadKey();
+            //int n = 10;
+            //var result = FindMissingNumer(input, n);
+            //Console.WriteLine(result);
+            //Console.ReadKey();
+
+            //Thread th = new Thread(new ThreadStart(SumOfNumber(input)));
+            //th.Start();
+
+            new Thread((o => {
+                var sum = SumOfNumber(input);
+            })).Start();
+
+            new Thread((o => {
+                var sum = AverageOfNumber(input);
+            })).Start();
+            new Thread((o => {
+                var sum = ListOfOdds(input);
+            })).Start();
+
+
+
         }
 
         public static  int FindMissingNumer(int[] nums, int n)
@@ -39,5 +59,39 @@ namespace Test4
 
             return result;
         }
+
+        public static int SumOfNumber(int[] nums)
+        {
+            int sum = 0;
+            for(int i =0; i < nums.Length; i++)
+            {
+
+                sum += nums[i];
+            }
+            return sum;
+        }
+
+        public static int AverageOfNumber(int[] nums)
+        {
+            var sum = SumOfNumber(nums);
+            var average = sum / nums.Length;
+            return average;
+        }
+
+        public static int[] ListOfOdds(int[] nums)
+        {
+            var list = new List<int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if(nums[i] % 2 != 0)
+                {
+                    list.Add(nums[i]);
+                }
+            }
+            return list.ToArray();
+        }
+
+        //Define array of n numbers
+        //comute sum of n & avarage & list of odd number
     }
 }
